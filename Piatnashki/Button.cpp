@@ -58,41 +58,44 @@ namespace UI
 	{
 		UIObject::update();
 
-		if (getBounds().contains(Vector2f(Mouse::getPosition(*getWindow()))) != isUnder)
+		if (getActive())
 		{
-			if (isUnder)
+			if (getBounds().contains(Vector2f(Mouse::getPosition(*getWindow()))) != isUnder)
 			{
-				if (onMouseExit != nullptr)
-					onMouseExit(*this);
-
-				fill(isPressed, isPressed + Mouse::Button::ButtonCount, false);
-			}
-			else
-			{
-				if (onMouseEnter != nullptr)
-					onMouseEnter(*this);
-			}
-
-			isUnder = !isUnder;
-		}
-
-		if (isUnder)
-			for (int i = 0; i < Mouse::Button::ButtonCount; i++)
-				if (!isPressed[i] && Mouse::isButtonPressed((Mouse::Button)i))
+				if (isUnder)
 				{
-					isPressed[i] = true;
+					if (onMouseExit != nullptr)
+						onMouseExit(*this);
 
-					if (onMouseDown != nullptr)
-						onMouseDown(*this, (Mouse::Button)i);
+					fill(isPressed, isPressed + Mouse::Button::ButtonCount, false);
 				}
 				else
-				if (isPressed[i] && !Mouse::isButtonPressed((Mouse::Button)i))
 				{
-					isPressed[i] = false;
-
-					if (onMouseUp != nullptr)
-						onMouseUp(*this, (Mouse::Button)i);
+					if (onMouseEnter != nullptr)
+						onMouseEnter(*this);
 				}
+
+				isUnder = !isUnder;
+			}
+
+			if (isUnder)
+				for (int i = 0; i < Mouse::Button::ButtonCount; i++)
+					if (!isPressed[i] && Mouse::isButtonPressed((Mouse::Button)i))
+					{
+						isPressed[i] = true;
+
+						if (onMouseDown != nullptr)
+							onMouseDown(*this, (Mouse::Button)i);
+					}
+					else
+						if (isPressed[i] && !Mouse::isButtonPressed((Mouse::Button)i))
+						{
+							isPressed[i] = false;
+
+							if (onMouseUp != nullptr)
+								onMouseUp(*this, (Mouse::Button)i);
+						}
+		}
 	}
 
 	void Button::setGlobalPosition(Vector2f position)

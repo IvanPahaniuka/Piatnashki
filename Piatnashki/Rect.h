@@ -30,11 +30,11 @@ namespace UI
 		~Rect();
 
 	protected:
-		RectangleShape rect;
-
 		void updatePivot() override;
-
 		void draw() override;
+
+	private:
+		RectangleShape rect;
 
 	};
 }

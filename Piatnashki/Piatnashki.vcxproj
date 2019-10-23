@@ -137,10 +137,13 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="LabelButton.cpp" />
+    <ClCompile Include="CharsTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="ShadowEffect.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="UIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,9 +151,12 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Label.h" />
+    <ClInclude Include="LabelButton.h" />
+    <ClInclude Include="CharsTable.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="ShadowEffect.h" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIObject.h" />
   </ItemGroup>

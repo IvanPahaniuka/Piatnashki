@@ -9,8 +9,8 @@ using namespace UI;
 enum class GAME_MODES: int 
 {
 	EASY = 3,
-	NORMAL = 5,
-	HARD = 7
+	NORMAL = 4,
+	HARD = 5
 };
 
 const Color FOREGROUND_COLOR = Color::Color(255, 255, 255);
@@ -18,6 +18,9 @@ const Color BACKGROUND_COLOR = Color::Color(15, 15, 15);
 
 const Color SHADOW_COLOR = Color::Color(125, 125, 125);
 const Color FOCUSED_COLOR = Color::Color(238, 17, 55);
+
+const Vector2f GAMEFIELD_SIZE = Vector2f(389, 389);
+const float GAMEFIELD_THICKNESS = 7;
 
 
 forward_list<UIObject*> objects;
@@ -30,21 +33,86 @@ void initialize(RenderWindow &window)
 	if (!font->loadFromFile("Font.ttf"))
 		throw exception("Font loading error!");
 
-#pragma region mainMenu
+	Object *mainMenu = new Object();
+	Object *gameMenu = new Object();
 
-#pragma region playButton
+#pragma region GameMenu
+#pragma region Timer
+	{
+		LabelButton *timerButton = new LabelButton();
+		timerButton->setWindow(window);
+		timerButton->setFont(*font);
+		timerButton->setParent(gameMenu);
+		timerButton->setFontSize(48U);
+		timerButton->setText(L"00:00");
+		timerButton->setPivot(Vector2f(0.5, 0.5));
+		timerButton->setGlobalPosition(Vector2f(250, 65));
+		timerButton->setFillColor(FOREGROUND_COLOR);
+		timerButton->setSize(Vector2f(250, 50));
+		objects.push_front(timerButton);
+
+		ShadowEffect* shadow = new ShadowEffect(*timerButton);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 3));
+
+		Vector2f* pos = new Vector2f(timerButton->getGlobalPosition());
+		timerButton->setMouseEnterFunc([shadow](UIObject &sender) {
+			shadow->setColor(FOCUSED_COLOR);
+		});
+		timerButton->setMouseExitFunc([shadow, pos](UIObject &sender) {
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		timerButton->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 1));
+			*pos = shadow->getTarget()->getGlobalPosition();
+			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
+		});
+		timerButton->setMouseUpFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+
+	}
+#pragma endregion
+
+#pragma region GameField
+	Table *gameTable;
+	{
+		gameTable = new Table();
+		gameTable->setWindow(window);
+		gameTable->setPivot(Vector2f(0.5, 0.5));
+		gameTable->setOutlineColor(FOREGROUND_COLOR);
+		gameTable->setOutlineThickness(GAMEFIELD_THICKNESS);
+		gameTable->setSize(GAMEFIELD_SIZE);
+		gameTable->setGlobalPosition(Vector2f(250, 340));
+		gameTable->setParent(gameMenu);
+		objects.push_front(gameTable);
+
+		{
+			ShadowEffect *shadow = new ShadowEffect(*gameTable);
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 4));
+		}
+	}
+#pragma endregion
+
+#pragma region MainMenuButton
+
 	{
 		BorderLabelButton* button = new BorderLabelButton();
 		button->setWindow(window);
 		button->setFont(*font);
 		button->setFontSize(32U);
 		button->setFillColor(FOREGROUND_COLOR);
-		button->setText(L"ÈÃÐÀÒÜ");
-		button->setSize(Vector2f(220, 50));
-		button->setPivot(Vector2f(0.5, 1));
-		button->setGlobalPosition(Vector2f(250, 650));
-		button->setOutlineThickness(5);
+		button->setText(L"ÌÅÍÞ");
+		button->setSize(Vector2f(210, 60));
+		button->setPivot(Vector2f(1, 1));
+		button->setGlobalPosition(Vector2f(247, 655));
+		button->setOutlineThickness(6);
 		button->setOutlineColor(FOREGROUND_COLOR);
+		button->setParent(gameMenu);
 		objects.push_front(button);
 
 		ShadowEffect* shadow = new ShadowEffect(*button);
@@ -65,9 +133,110 @@ void initialize(RenderWindow &window)
 			*pos = shadow->getTarget()->getGlobalPosition();
 			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 		});
-		button->setMouseUpFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
 			shadow->setOffset(Vector2f(0, 3));
 			shadow->getTarget()->setGlobalPosition(*pos);
+
+			mainMenu->setActive(true);
+			gameMenu->setActive(false);
+		});
+	}
+
+
+#pragma endregion
+
+#pragma region RestartButton
+
+	{
+		BorderLabelButton* button = new BorderLabelButton();
+		button->setWindow(window);
+		button->setFont(*font);
+		button->setFontSize(32U);
+		button->setFillColor(FOREGROUND_COLOR);
+		button->setText(L"ÇÀÍÎÂÎ");
+		button->setSize(Vector2f(210, 60));
+		button->setPivot(Vector2f(0, 1));
+		button->setGlobalPosition(Vector2f(253, 655));
+		button->setOutlineThickness(6);
+		button->setOutlineColor(FOREGROUND_COLOR);
+		button->setParent(gameMenu);
+		objects.push_front(button);
+
+		ShadowEffect* shadow = new ShadowEffect(*button);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 3));
+
+		Vector2f* pos = new Vector2f(button->getGlobalPosition());
+		button->setMouseEnterFunc([shadow](UIObject &sender) {
+			shadow->setColor(FOCUSED_COLOR);
+		});
+		button->setMouseExitFunc([shadow, pos](UIObject &sender) {
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 1));
+			*pos = shadow->getTarget()->getGlobalPosition();
+			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
+		});
+		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+
+			mainMenu->setActive(true);
+			gameMenu->setActive(false);
+		});
+	}
+
+
+#pragma endregion
+
+#pragma endregion
+
+#pragma region MainMenu
+#pragma region playButton
+	{
+		BorderLabelButton* button = new BorderLabelButton();
+		button->setWindow(window);
+		button->setFont(*font);
+		button->setFontSize(32U);
+		button->setFillColor(FOREGROUND_COLOR);
+		button->setText(L"ÈÃÐÀÒÜ");
+		button->setSize(Vector2f(220, 50));
+		button->setPivot(Vector2f(0.5, 1));
+		button->setGlobalPosition(Vector2f(250, 650));
+		button->setOutlineThickness(5);
+		button->setOutlineColor(FOREGROUND_COLOR);
+		button->setParent(mainMenu);
+		objects.push_front(button);
+
+		ShadowEffect* shadow = new ShadowEffect(*button);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 3));
+
+		Vector2f* pos = new Vector2f(button->getGlobalPosition());
+		button->setMouseEnterFunc([shadow](UIObject &sender) {
+			shadow->setColor(FOCUSED_COLOR);
+		});
+		button->setMouseExitFunc([shadow, pos](UIObject &sender) {
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 1));
+			*pos = shadow->getTarget()->getGlobalPosition();
+			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
+		});
+		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+
+			gameTable->setCellsCount(Vector2u((unsigned int)*gameMode, (unsigned int)*gameMode));
+
+			mainMenu->setActive(false);
+			gameMenu->setActive(true);
 		});
 	}
 #pragma endregion
@@ -91,12 +260,13 @@ void initialize(RenderWindow &window)
 		cbutton->setGlobalPosition(Vector2f(250, -5));
 		cbutton->setOutlineThickness(5);
 		cbutton->setOutlineColor(FOREGROUND_COLOR);
+		cbutton->setParent(mainMenu);
 		objects.push_front(cbutton);
 
 		{
 			ShadowEffect* shadow = new ShadowEffect(*cbutton);
 			shadow->setColor(SHADOW_COLOR);
-shadow->setOffset(Vector2f(0, 3));
+			shadow->setOffset(Vector2f(0, 3));
 		}
 #pragma endregion
 #pragma region leftButton
@@ -111,6 +281,7 @@ shadow->setOffset(Vector2f(0, 3));
 		lbutton->setGlobalPosition(Vector2f(0, -5));
 		lbutton->setOutlineThickness(5);
 		lbutton->setOutlineColor(FOREGROUND_COLOR);
+		lbutton->setParent(mainMenu);
 		objects.push_front(lbutton);
 
 		{
@@ -158,6 +329,7 @@ shadow->setOffset(Vector2f(0, 3));
 		rbutton->setGlobalPosition(Vector2f(500, -5));
 		rbutton->setOutlineThickness(5);
 		rbutton->setOutlineColor(FOREGROUND_COLOR);
+		rbutton->setParent(mainMenu);
 		objects.push_front(rbutton);
 
 		{
@@ -195,105 +367,35 @@ shadow->setOffset(Vector2f(0, 3));
 	}
 #pragma endregion
 
-#pragma region table
+#pragma region Table
 	{
-		UI::Rect *rect, *hrect, *vrect;
-
-#pragma region rect
-		rect = new UI::Rect();
-		rect->setWindow(window);
-		rect->setPivot(Vector2f(0.5, 0.5));
-		rect->setFillColor(Color::Transparent);
-		rect->setOutlineColor(FOREGROUND_COLOR);
-		rect->setOutlineThickness(5);
-		rect->setSize(Vector2f(304, 304));
-		rect->setGlobalPosition(Vector2f(250, 330));
-
-		{
-			ShadowEffect *shadow = new ShadowEffect(*rect);
-			shadow->setColor(SHADOW_COLOR);
-			shadow->setOffset(Vector2f(0, 4));
-		}
-
-#pragma endregion
-
-#pragma region vrect
-		vrect = new UI::Rect();
-		vrect->setWindow(window);
-		vrect->setParent(rect);
-		vrect->setPivot(Vector2f(0.5, 0.5));
-		vrect->setSize(Vector2f(98, 304));
-		vrect->setFillColor(Color::Transparent);
-		vrect->setOutlineColor(FOREGROUND_COLOR);
-		vrect->setOutlineThickness(5);
-		vrect->setLocalPosition(Vector2f(0, 0));
-		objects.push_front(vrect);
-		objects.push_front(rect);
-
-		{
-			ShadowEffect *shadow = new ShadowEffect(*vrect);
-			shadow->setColor(SHADOW_COLOR);
-			shadow->setOffset(Vector2f(0, 4));
-		}
-
-#pragma endregion
-
-#pragma region hrect
-		hrect = new UI::Rect();
-		hrect->setWindow(window);
-		hrect->setParent(rect);
-		hrect->setPivot(Vector2f(0.5, 0.5));
-		hrect->setSize(Vector2f(304, 98));
-		hrect->setFillColor(Color::Transparent);
-		hrect->setOutlineColor(FOREGROUND_COLOR);
-		hrect->setOutlineThickness(5);
-		hrect->setLocalPosition(Vector2f(0, 0));
-		objects.push_front(hrect);
-
-		{
-			ShadowEffect *shadow = new ShadowEffect(*hrect);
-			shadow->setColor(SHADOW_COLOR);
-			shadow->setOffset(Vector2f(0, 4));
-		}
-
-#pragma endregion
-
-#pragma region labels
-		wstring txt = L"ÏßÒÍÀØÊÈ";
+		CharsTable *table = new CharsTable();
+		table->setWindow(window);
+		table->setPivot(Vector2f(0.5, 0.5));
+		table->setFillColor(FOREGROUND_COLOR);
+		table->setOutlineColor(FOREGROUND_COLOR);
+		table->setOutlineThickness(5);
+		table->setSize(Vector2f(304, 304));
+		table->setGlobalPosition(Vector2f(250, 330));
+		table->setCellsCount(Vector2u(3, 3));
+		table->setParent(mainMenu);
+		table->setText(L"ÏßÒÍÀØÊÈ");
+		table->setFont(*font);
+		table->setFontSize(32U);
 		
-		float dl = 103;
-		Vector2f stpoint(-103, -103);
-		unsigned int i = 0, j = 0;
-		for (i = 0; (i < 3) && (i * 3 + j < txt.length()); i++)
+		objects.push_front(table);
+
 		{
-			for (j = 0; (j < 3) && (i * 3 + j < txt.length()); j++)
-			{
-				Label *label = new Label();
-				label->setWindow(window);
-				label->setFont(*font);
-				label->setFontSize(32U);
-				wstring c = L" ";
-				c[0] = txt[i * 3 + j];
-				label->setText(c);
-				label->setParent(rect);
-				label->setPivot(Vector2f(0.5, 0.5));
-				label->setLocalPosition(stpoint + Vector2f(dl*j, dl*i));
-				objects.push_front(label);
-
-				ShadowEffect *shadow = new ShadowEffect(*label);
-				shadow->setColor(SHADOW_COLOR);
-				shadow->setOffset(Vector2f(0, 3));
-			}
-
-			j = 0;
+			ShadowEffect *shadow = new ShadowEffect(*table);
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 4));
 		}
 
-#pragma endregion
-		
 	}
 #pragma endregion
-
 #pragma endregion
+
+	gameMenu->setActive(false);
 }
 
 

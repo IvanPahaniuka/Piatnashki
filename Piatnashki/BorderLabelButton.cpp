@@ -5,12 +5,6 @@ namespace UI
 {
 	BorderLabelButton::BorderLabelButton()
 	{
-		label.setParent(this);
-		label.setPivot(Vector2f(0.5, 0.5));
-		label.setLocalPosition(Vector2f(0, 0));
-		label.setFillColor(Color::Blue);
-		label.setText(L"BUTTON");
-
 		border.setParent(this);
 		border.setPivot(Vector2f(0.5, 0.5));
 		border.setLocalPosition(Vector2f(0, 0));
@@ -18,55 +12,13 @@ namespace UI
 		border.setFillColor(Color::Transparent);
 		border.setOutlineThickness(5);
 		border.setOutlineColor(Color::Blue);
-		
 	}
 
 	void BorderLabelButton::setWindow(RenderWindow & window)
 	{
-		Button::setWindow(window);
+		LabelButton::setWindow(window);
 
 		border.setWindow(window);
-		label.setWindow(window);
-	}
-
-	void BorderLabelButton::setText(wstring text)
-	{
-		label.setText(text);
-	}
-
-	wstring BorderLabelButton::getText()
-	{
-		return label.getText();
-	}
-
-	void BorderLabelButton::setFont(Font & font)
-	{
-		label.setFont(font);
-	}
-
-	const Font * BorderLabelButton::getFont()
-	{
-		return label.getFont();
-	}
-
-	void BorderLabelButton::setFontSize(unsigned int fontSize)
-	{
-		label.setFontSize(fontSize);
-	}
-
-	unsigned int BorderLabelButton::getFontSize()
-	{
-		return label.getFontSize();
-	}
-
-	void BorderLabelButton::setFillColor(Color fillColor)
-	{
-		label.setFillColor(fillColor);
-	}
-
-	Color BorderLabelButton::getFillColor()
-	{
-		return label.getFillColor();
 	}
 
 	void BorderLabelButton::setOutlineColor(Color outlineColor)
@@ -91,21 +43,19 @@ namespace UI
 
 	void BorderLabelButton::updateRect()
 	{
-		Button::updateRect();
+		LabelButton::updateRect();
 
 		border.setSize(getSize());
 
 		Vector2f center = Vector2f(getBounds().left + getSize().x / 2, getBounds().top + getSize().y / 2);
 		border.setGlobalPosition(center);
-		label.setGlobalPosition(center);
 	}
 
 	void BorderLabelButton::draw()
 	{
-		Button::draw();
+		LabelButton::draw();
 
 		border.render();
-		label.render();
 	}
 
 	BorderLabelButton::~BorderLabelButton()

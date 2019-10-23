@@ -29,7 +29,7 @@ namespace UI
 		RenderWindow* getWindow();
 		virtual void setWindow(RenderWindow &window);
 
-		virtual void setPivot(Vector2f pivot);
+		void setPivot(Vector2f pivot);
 		Vector2f getPivot();
 
 		virtual void setFillColor(Color fillColor) {};

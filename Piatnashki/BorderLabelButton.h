@@ -1,30 +1,17 @@
 #pragma once
-#include "Button.h"
+#include "LabelButton.h"
 #include "Rect.h"
-#include "Label.h"
 
 using namespace std;
 
 namespace UI 
 {
-	class BorderLabelButton: public Button
+	class BorderLabelButton: public LabelButton
 	{
 	public:
 		BorderLabelButton();
 
 		void setWindow(RenderWindow &window) override;
-
-		void setText(wstring text);
-		wstring getText();
-
-		void setFont(Font &font);
-		const Font* getFont();
-
-		void setFontSize(unsigned int fontSize);
-		unsigned int getFontSize();
-
-		void setFillColor(Color fillColor) override;
-		Color getFillColor() override;
 
 		void setOutlineColor(Color outlineColor) override;
 		Color getOutlineColor() override;
@@ -40,7 +27,6 @@ namespace UI
 
 	private:
 		Rect border;
-		Label label;
 	};
 }
 

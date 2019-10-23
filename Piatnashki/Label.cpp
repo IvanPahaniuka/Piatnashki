@@ -53,6 +53,7 @@ namespace UI
 	void Label::setFont(Font & font)
 	{
 		text.setFont(font);
+		updatePivot();
 	}
 	const Font * Label::getFont()
 	{
@@ -62,7 +63,9 @@ namespace UI
 	void Label::setFontSize(unsigned int fontSize)
 	{
 		text.setCharacterSize(fontSize);
+		updatePivot();
 	}
+
 	unsigned int Label::getFontSize()
 	{
 		return text.getCharacterSize();

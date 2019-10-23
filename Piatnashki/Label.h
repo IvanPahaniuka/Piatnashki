@@ -36,11 +36,11 @@ namespace UI
 		~Label();
 
 	protected:
-		Text text;
-
 		void updatePivot() override;
-
 		void draw() override;
+
+	private:
+		Text text;
 
 
 	};
