@@ -6,6 +6,7 @@
 #include "Rect.h"
 #include "Table.h"
 #include "CharsTable.h"
+#include "ButtonsTable.h"
 #include "Button.h"
 #include "LabelButton.h"
 #include "BorderLabelButton.h"

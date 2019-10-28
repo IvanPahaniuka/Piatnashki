@@ -21,10 +21,13 @@ namespace UI
 		bool isMouseUnder();
 		bool isMousePressed(Mouse::Button button);
 
-		void setMouseEnterFunc(MouseMovingFunc func);
-		void setMouseExitFunc(MouseMovingFunc func);
-		void setMouseDownFunc(MousePressingFunc func); 
-		void setMouseUpFunc(MousePressingFunc func);
+		void setNormalState(ButtonStateFunc onNormal);
+		void setOverState(ButtonStateFunc onOver);
+		void setPressedState(ButtonStateFunc onPressed);
+		void setClick(ClickFunc onClick);
+
+		void setEnabled(bool isEnabled);
+		bool getEnabled();
 
 		FloatRect getBounds();
 
@@ -41,12 +44,17 @@ namespace UI
 		bool isUnder = false;
 		FloatRect rect;
 		bool isPressed[Mouse::ButtonCount];
-		MouseMovingFunc
-			onMouseEnter, 
-			onMouseExit;
-		MousePressingFunc
-			onMouseDown, 
-			onMouseUp;
+		ButtonStateFunc
+			onNormal, 
+			onOver, 
+			onPressed;
+		ClickFunc
+			onClick;
+		bool isEnabled = true;
+		unsigned int pressedCount = 0;
+
+		void setPressedCount(unsigned int count);
+		unsigned int getPressedCount();
 	};
 }
 

@@ -10,7 +10,7 @@ namespace UI
 	UIObject::UIObject()
 	{
 	}
-	
+
 	void UIObject::render()
 	{
 		if (getActive())
@@ -58,6 +58,14 @@ namespace UI
 		return 0.0f;
 	}
 
+	UIObject::~UIObject()
+	{
+		for each (Effect *effect in effects)
+			delete effect;
+
+		effects.clear();
+	}
+
 	void UIObject::effectAdd(Effect & effect)
 	{
 		effects.push_front(&effect);
@@ -66,6 +74,7 @@ namespace UI
 	void UIObject::effectRemove(Effect & effect)
 	{
 		effects.remove(&effect);
+		delete &effect;
 	}
 
 }

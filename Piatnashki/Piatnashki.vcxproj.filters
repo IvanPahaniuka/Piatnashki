@@ -13,12 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Buttons">
+      <UniqueIdentifier>{452df2fd-bd81-46d8-91ab-1e41dca4f81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Tables">
+      <UniqueIdentifier>{53b8eb5f-362e-4b3a-8efc-0e211f9878ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Effects">
+      <UniqueIdentifier>{e7e1a37c-b4c7-4840-863e-4e696375533e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Buttons">
+      <UniqueIdentifier>{79ac8311-de65-41f0-b081-8115b051f8fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Tables">
+      <UniqueIdentifier>{00cc8d62-b83a-4b35-a8b8-877b8f0b3a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Effects">
+      <UniqueIdentifier>{25c8523b-9d08-4b36-a529-9121a9c45b58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
@@ -30,32 +45,35 @@
     <ClCompile Include="UIObject.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadowEffect.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Rect.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Исходные файлы\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowEffect.cpp">
+      <Filter>Исходные файлы\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="BorderLabelButton.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Исходные файлы\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="LabelButton.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Buttons</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="ButtonsTable.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
     <ClCompile Include="CharsTable.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="UIObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -65,12 +83,6 @@
     <ClInclude Include="Object.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowEffect.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -78,16 +90,28 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="BorderLabelButton.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Файлы заголовков\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="LabelButton.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Buttons</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="ButtonsTable.h">
+      <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
     <ClInclude Include="CharsTable.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Файлы заголовков\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowEffect.h">
+      <Filter>Файлы заголовков\Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

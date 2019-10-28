@@ -56,31 +56,32 @@ void initialize(RenderWindow &window)
 		shadow->setOffset(Vector2f(0, 3));
 
 		Vector2f* pos = new Vector2f(timerButton->getGlobalPosition());
-		timerButton->setMouseEnterFunc([shadow](UIObject &sender) {
+		timerButton->setOverState([shadow, pos](UIObject &sender) {
 			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		timerButton->setMouseExitFunc([shadow, pos](UIObject &sender) {
+		timerButton->setNormalState([shadow, pos](UIObject &sender) {
 			shadow->setColor(SHADOW_COLOR);
 			shadow->setOffset(Vector2f(0, 3));
 			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		timerButton->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+		timerButton->setPressedState([shadow, pos](UIObject &sender) {
 			shadow->setOffset(Vector2f(0, 1));
 			*pos = shadow->getTarget()->getGlobalPosition();
 			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 		});
-		timerButton->setMouseUpFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
-			shadow->setOffset(Vector2f(0, 3));
-			shadow->getTarget()->setGlobalPosition(*pos);
+		timerButton->setClick([](UIObject &sender, Mouse::Button button) {
+			
 		});
 
 	}
 #pragma endregion
 
 #pragma region GameField
-	Table *gameTable;
+	ButtonsTable *gameTable;
 	{
-		gameTable = new Table();
+		gameTable = new ButtonsTable();
 		gameTable->setWindow(window);
 		gameTable->setPivot(Vector2f(0.5, 0.5));
 		gameTable->setOutlineColor(FOREGROUND_COLOR);
@@ -88,12 +89,87 @@ void initialize(RenderWindow &window)
 		gameTable->setSize(GAMEFIELD_SIZE);
 		gameTable->setGlobalPosition(Vector2f(250, 340));
 		gameTable->setParent(gameMenu);
+		gameTable->setText(L"QWERTYUIOPASDFGHJKLZXCVBNM");
+		gameTable->setFont(*font);
+		gameTable->setFillColor(FOREGROUND_COLOR);
+		gameTable->setFontSize(32U);
 		objects.push_front(gameTable);
 
 		{
 			ShadowEffect *shadow = new ShadowEffect(*gameTable);
 			shadow->setColor(SHADOW_COLOR);
-			shadow->setOffset(Vector2f(0, 4));
+			shadow->setOffset(Vector2f(0, 0));
+		}
+
+		{
+			ShadowEffect *shadow = new ShadowEffect();
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+
+			Vector2f *pos = new Vector2f();
+			UIObject **next = new UIObject*();
+			*next = nullptr;
+
+			gameTable->setNormalState([shadow, pos, next](UIObject &sender) {
+				if (shadow->getTarget() == &sender)
+				{
+					sender.setGlobalPosition(*pos);
+					shadow->setTarget(*next);
+
+					if (*next != nullptr)
+						*pos = Vector2f((*next)->getGlobalPosition());
+
+					*next = nullptr;
+				}
+
+				shadow->setColor(FOCUSED_COLOR);
+				shadow->setOffset(Vector2f(0, 3));
+			});
+
+			gameTable->setOverState([shadow, pos, next](UIObject &sender) {
+				if (shadow->getTarget() != &sender && *next == nullptr)
+				{
+					*next = &sender;
+
+					if (shadow->getTarget() == nullptr)
+					{
+						shadow->setTarget(*next);
+						*pos = Vector2f((*next)->getGlobalPosition());
+						*next = nullptr;
+					}
+				}
+
+				if (shadow->getTarget() == &sender)
+				{
+					shadow->setColor(FOCUSED_COLOR);
+					shadow->setOffset(Vector2f(0, 3));
+
+					sender.setGlobalPosition(*pos);
+				}
+			});
+
+			gameTable->setPressedState([shadow, pos, next](UIObject &sender) {
+				if (shadow->getTarget() != &sender && *next == nullptr)
+				{
+					*next = &sender;
+
+					if (shadow->getTarget() == nullptr)
+					{
+						shadow->setTarget(*next);
+						*pos = Vector2f((*next)->getGlobalPosition());
+						*next = nullptr;
+					}
+				}
+				
+
+				if (shadow->getTarget() == &sender)
+				{
+					shadow->setColor(FOCUSED_COLOR);
+					shadow->setOffset(Vector2f(0, 1));
+
+					sender.setGlobalPosition(*pos + Vector2f(0, 2));
+				}
+			});
 		}
 	}
 #pragma endregion
@@ -120,23 +196,22 @@ void initialize(RenderWindow &window)
 		shadow->setOffset(Vector2f(0, 3));
 
 		Vector2f* pos = new Vector2f(button->getGlobalPosition());
-		button->setMouseEnterFunc([shadow](UIObject &sender) {
+		button->setOverState([shadow, pos](UIObject &sender) {
 			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseExitFunc([shadow, pos](UIObject &sender) {
+		button->setNormalState([shadow, pos](UIObject &sender) {
 			shadow->setColor(SHADOW_COLOR);
 			shadow->setOffset(Vector2f(0, 3));
 			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+		button->setPressedState([shadow, pos](UIObject &sender) {
 			shadow->setOffset(Vector2f(0, 1));
 			*pos = shadow->getTarget()->getGlobalPosition();
 			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 		});
-		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
-			shadow->setOffset(Vector2f(0, 3));
-			shadow->getTarget()->setGlobalPosition(*pos);
-
+		button->setClick([gameMenu, mainMenu](UIObject &sender, Mouse::Button button) {
 			mainMenu->setActive(true);
 			gameMenu->setActive(false);
 		});
@@ -167,23 +242,22 @@ void initialize(RenderWindow &window)
 		shadow->setOffset(Vector2f(0, 3));
 
 		Vector2f* pos = new Vector2f(button->getGlobalPosition());
-		button->setMouseEnterFunc([shadow](UIObject &sender) {
+		button->setOverState([shadow, pos](UIObject &sender) {
 			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseExitFunc([shadow, pos](UIObject &sender) {
+		button->setNormalState([shadow, pos](UIObject &sender) {
 			shadow->setColor(SHADOW_COLOR);
 			shadow->setOffset(Vector2f(0, 3));
 			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+		button->setPressedState([shadow, pos](UIObject &sender) {
 			shadow->setOffset(Vector2f(0, 1));
 			*pos = shadow->getTarget()->getGlobalPosition();
 			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 		});
-		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
-			shadow->setOffset(Vector2f(0, 3));
-			shadow->getTarget()->setGlobalPosition(*pos);
-
+		button->setClick([gameMenu, mainMenu](UIObject &sender, Mouse::Button button) {
 			mainMenu->setActive(true);
 			gameMenu->setActive(false);
 		});
@@ -216,23 +290,22 @@ void initialize(RenderWindow &window)
 		shadow->setOffset(Vector2f(0, 3));
 
 		Vector2f* pos = new Vector2f(button->getGlobalPosition());
-		button->setMouseEnterFunc([shadow](UIObject &sender) {
+		button->setOverState([shadow, pos](UIObject &sender) {
 			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseExitFunc([shadow, pos](UIObject &sender) {
+		button->setNormalState([shadow, pos](UIObject &sender) {
 			shadow->setColor(SHADOW_COLOR);
 			shadow->setOffset(Vector2f(0, 3));
 			shadow->getTarget()->setGlobalPosition(*pos);
 		});
-		button->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+		button->setPressedState([shadow, pos](UIObject &sender) {
 			shadow->setOffset(Vector2f(0, 1));
 			*pos = shadow->getTarget()->getGlobalPosition();
 			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 		});
-		button->setMouseUpFunc([shadow, pos, gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
-			shadow->setOffset(Vector2f(0, 3));
-			shadow->getTarget()->setGlobalPosition(*pos);
-
+		button->setClick([gameMenu, mainMenu, gameTable, gameMode](UIObject &sender, Mouse::Button button) {
 			gameTable->setCellsCount(Vector2u((unsigned int)*gameMode, (unsigned int)*gameMode));
 
 			mainMenu->setActive(false);
@@ -290,23 +363,22 @@ void initialize(RenderWindow &window)
 			shadow->setOffset(Vector2f(0, 3));
 
 			Vector2f* pos = new Vector2f(lbutton->getGlobalPosition());
-			lbutton->setMouseEnterFunc([shadow](UIObject &sender) {
+			lbutton->setOverState([shadow, pos](UIObject &sender) {
 				shadow->setColor(FOCUSED_COLOR);
+				shadow->setOffset(Vector2f(0, 3));
+				shadow->getTarget()->setGlobalPosition(*pos);
 			});
-			lbutton->setMouseExitFunc([shadow, pos](UIObject &sender) {
+			lbutton->setNormalState([shadow, pos](UIObject &sender) {
 				shadow->setColor(SHADOW_COLOR);
 				shadow->setOffset(Vector2f(0, 3));
 				shadow->getTarget()->setGlobalPosition(*pos);
 			});
-			lbutton->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			lbutton->setPressedState([shadow, pos](UIObject &sender) {
 				shadow->setOffset(Vector2f(0, 1));
 				*pos = shadow->getTarget()->getGlobalPosition();
 				shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 			});
-			lbutton->setMouseUpFunc([lbutton, cbutton, lbuttonMode, gameMode, shadow, pos](UIObject &sender, Mouse::Button button) {
-				shadow->setOffset(Vector2f(0, 3));
-				shadow->getTarget()->setGlobalPosition(*pos);
-
+			lbutton->setClick([lbutton, cbutton, lbuttonMode, gameMode](UIObject &sender, Mouse::Button button) {
 				GAME_MODES tmp = *lbuttonMode;
 				*lbuttonMode = *gameMode;
 				*gameMode = tmp;
@@ -338,23 +410,22 @@ void initialize(RenderWindow &window)
 			shadow->setOffset(Vector2f(0, 3));
 
 			Vector2f* pos = new Vector2f(rbutton->getGlobalPosition());
-			rbutton->setMouseEnterFunc([shadow](UIObject &sender) {
+			rbutton->setOverState([shadow, pos](UIObject &sender) {
 				shadow->setColor(FOCUSED_COLOR);
+				shadow->setOffset(Vector2f(0, 3));
+				shadow->getTarget()->setGlobalPosition(*pos);
 			});
-			rbutton->setMouseExitFunc([shadow, pos](UIObject &sender) {
+			rbutton->setNormalState([shadow, pos](UIObject &sender) {
 				shadow->setColor(SHADOW_COLOR);
 				shadow->setOffset(Vector2f(0, 3));
 				shadow->getTarget()->setGlobalPosition(*pos);
 			});
-			rbutton->setMouseDownFunc([shadow, pos](UIObject &sender, Mouse::Button button) {
+			rbutton->setPressedState([shadow, pos](UIObject &sender) {
 				shadow->setOffset(Vector2f(0, 1));
 				*pos = shadow->getTarget()->getGlobalPosition();
 				shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
 			});
-			rbutton->setMouseUpFunc([rbutton, cbutton, rbuttonMode, gameMode, shadow, pos](UIObject &sender, Mouse::Button button) {
-				shadow->setOffset(Vector2f(0, 3));
-				shadow->getTarget()->setGlobalPosition(*pos);
-
+			rbutton->setClick([rbutton, cbutton, rbuttonMode, gameMode](UIObject &sender, Mouse::Button button) {
 				GAME_MODES tmp = *rbuttonMode;
 				*rbuttonMode = *gameMode;
 				*gameMode = tmp;

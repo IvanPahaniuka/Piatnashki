@@ -29,24 +29,49 @@ namespace UI
 		return isPressed[button];
 	}
 
-	void Button::setMouseEnterFunc(MouseMovingFunc func)
+	void Button::setNormalState(ButtonStateFunc onNormal)
 	{
-		onMouseEnter = func;
+		this->onNormal = onNormal;
 	}
 
-	void Button::setMouseExitFunc(MouseMovingFunc func)
+	void Button::setOverState(ButtonStateFunc onOver)
 	{
-		onMouseExit = func;
+		this->onOver = onOver;
 	}
 
-	void Button::setMouseDownFunc(MousePressingFunc func)
+	void Button::setPressedState(ButtonStateFunc onPressed)
 	{
-		onMouseDown = func;
+		this->onPressed = onPressed;
 	}
 
-	void Button::setMouseUpFunc(MousePressingFunc func)
+	void Button::setClick(ClickFunc onClick)
 	{
-		onMouseUp = func;
+		this->onClick = onClick;
+	}
+
+	void Button::setEnabled(bool isEnabled)
+	{
+		this->isEnabled = isEnabled;
+
+		if (!isEnabled)
+		{
+			fill(isPressed, isPressed + Mouse::Button::ButtonCount, false);
+			setPressedCount(0);
+
+			if (onNormal != nullptr)
+				onNormal(*this);
+		}
+		else
+		{
+			if (isMouseUnder())
+				if (onOver != nullptr)
+					onOver(*this);
+		}
+	}
+
+	bool Button::getEnabled()
+	{
+		return isEnabled;
 	}
 
 	FloatRect Button::getBounds()
@@ -58,21 +83,22 @@ namespace UI
 	{
 		UIObject::update();
 
-		if (getActive())
+		if (getActive() && getEnabled())
 		{
 			if (getBounds().contains(Vector2f(Mouse::getPosition(*getWindow()))) != isUnder)
 			{
 				if (isUnder)
 				{
-					if (onMouseExit != nullptr)
-						onMouseExit(*this);
-
 					fill(isPressed, isPressed + Mouse::Button::ButtonCount, false);
+					setPressedCount(0);
+
+					if (onNormal != nullptr)
+						onNormal(*this);
 				}
 				else
 				{
-					if (onMouseEnter != nullptr)
-						onMouseEnter(*this);
+					if (onOver != nullptr)
+						onOver(*this);
 				}
 
 				isUnder = !isUnder;
@@ -83,17 +109,16 @@ namespace UI
 					if (!isPressed[i] && Mouse::isButtonPressed((Mouse::Button)i))
 					{
 						isPressed[i] = true;
-
-						if (onMouseDown != nullptr)
-							onMouseDown(*this, (Mouse::Button)i);
+						setPressedCount(getPressedCount() + 1);
 					}
 					else
 						if (isPressed[i] && !Mouse::isButtonPressed((Mouse::Button)i))
 						{
 							isPressed[i] = false;
+							setPressedCount(getPressedCount() - 1);
 
-							if (onMouseUp != nullptr)
-								onMouseUp(*this, (Mouse::Button)i);
+							if (onClick != nullptr)
+								onClick(*this, (Mouse::Button)i);
 						}
 		}
 	}
@@ -117,6 +142,29 @@ namespace UI
 		UIObject::updatePivot();
 
 		updateRect();
+	}
+
+	void Button::setPressedCount(unsigned int count)
+	{
+		if (count > Mouse::ButtonCount)
+			return;
+
+		if (pressedCount == 0 && count > 0)
+			if (onPressed != nullptr)
+				onPressed(*this);
+
+		if (count == 0 && pressedCount > 0)
+			if (onOver != nullptr)
+				onOver(*this);
+
+
+		pressedCount = count;
+
+	}
+
+	unsigned int Button::getPressedCount()
+	{
+		return pressedCount;
 	}
 
 	Button::~Button()

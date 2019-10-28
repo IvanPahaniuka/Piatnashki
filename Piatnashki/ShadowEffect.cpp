@@ -5,6 +5,10 @@ using namespace sf;
 
 namespace UI
 {
+	ShadowEffect::ShadowEffect()
+	{
+	}
+
 	ShadowEffect::ShadowEffect(UIObject &target) : Effect(target)
 	{
 

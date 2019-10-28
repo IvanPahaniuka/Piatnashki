@@ -8,6 +8,8 @@ namespace UI
 	class ShadowEffect : public Effect
 	{
 	public:
+		ShadowEffect();
+
 		ShadowEffect(UIObject &target);
 
 		void draw() override;

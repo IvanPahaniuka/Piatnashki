@@ -17,8 +17,8 @@ namespace UI
 		friend class Effect;
 
 	public:
-		typedef function<void(UIObject &sender)> MouseMovingFunc;
-		typedef function<void(UIObject &sender, Mouse::Button button)> MousePressingFunc;
+		typedef function<void(UIObject &sender)> ButtonStateFunc;
+		typedef function<void(UIObject &sender, Mouse::Button button)> ClickFunc;
 
 		UIObject();
 
@@ -41,7 +41,7 @@ namespace UI
 		virtual void setOutlineThickness(float thickness) {};
 		virtual float getOutlineThickness();
 		
-		~UIObject() {};
+		~UIObject();
 
 	protected:
 		virtual void draw() {};

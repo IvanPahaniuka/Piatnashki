@@ -4,10 +4,25 @@ using namespace std;
 
 namespace UI
 {
+	Effect::Effect()
+	{
+	}
+
 	Effect::Effect(UIObject & target)
 	{
 		this->target = &target;
 		target.effectAdd(*this);
+	}
+
+	void Effect::setTarget(UIObject *target)
+	{
+		if (this->target != nullptr)
+			this->target->effects.remove(this);
+		
+		this->target = target;
+
+		if (target != nullptr)
+			target->effectAdd(*this);
 	}
 
 	UIObject* Effect::getTarget()
@@ -17,11 +32,11 @@ namespace UI
 
 	void Effect::drawTarget()
 	{
-		target->draw();
+		if (target != nullptr)
+			target->draw();
 	}
 
 	Effect::~Effect()
 	{
-		target->effectRemove(*this);
 	}
 }

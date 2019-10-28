@@ -10,9 +10,13 @@ namespace UI
 	class Effect
 	{
 	public:
+		Effect();
+
 		Effect(UIObject &target);
 
+		void setTarget(UIObject *target);
 		UIObject* getTarget();
+
 		virtual void draw() {};
 
 		~Effect();
