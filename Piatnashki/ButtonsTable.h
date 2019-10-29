@@ -13,8 +13,10 @@ namespace UI
 
 		void setWindow(RenderWindow &window) override;
 
-		void setText(wstring text);
-		wstring getText();
+		void setText(wstring *text, int count);
+		wstring* getText();
+
+		int getTextCount();
 
 		void setFont(Font &font);
 		Font* getFont();
@@ -32,6 +34,8 @@ namespace UI
 		virtual void setPressedState(ButtonStateFunc onPressed);
 		virtual void setClick(ClickFunc onClick);
 
+		void render() override;
+
 		void update() override;
 
 		~ButtonsTable();
@@ -42,9 +46,21 @@ namespace UI
 		void updateModel() override;
 		virtual void updateButtonsModel();
 
+		LabelButton *getActiveButton();
+		void setActiveButton(LabelButton *button);
+
+		LabelButton *getButtonByIndex(int index);
+
+		void setTextCount(int count);
+
+		void updateText();
+		
+
 	private:
 		LabelButton *buttons = nullptr;
-		wstring text = L"";
+		LabelButton *active = nullptr;
+		wstring *text = new wstring[0];
+		int textCount = 0;
 		Font *font = nullptr;
 		unsigned int fontSize = 32U;
 		Color fillColor = Color::Transparent;
@@ -53,8 +69,6 @@ namespace UI
 			onNormalState = nullptr,
 			onOverState = nullptr,
 			onPressedState = nullptr;
-
-		void updateText();
 	};
 }
 

@@ -33,7 +33,8 @@ namespace UI
 	void Effect::drawTarget()
 	{
 		if (target != nullptr)
-			target->draw();
+			if (target->getActive())
+				target->draw();
 	}
 
 	Effect::~Effect()

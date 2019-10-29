@@ -15,16 +15,25 @@ namespace UI
 			buttons[i].setWindow(window);
 	}
 
-	void ButtonsTable::setText(wstring text)
+	void ButtonsTable::setText(wstring *text, int count)
 	{
+		if (text != this->text)
+			delete[] this->text;
+
 		this->text = text;
+		textCount = count;
 
 		updateText();
 	}
 
-	wstring ButtonsTable::getText()
+	wstring* ButtonsTable::getText()
 	{
 		return text;
+	}
+
+	int ButtonsTable::getTextCount()
+	{
+		return textCount;
 	}
 
 	void ButtonsTable::setFont(Font & font)
@@ -109,13 +118,33 @@ namespace UI
 			buttons[i].setClick(onClick);
 	}
 
+	void ButtonsTable::render()
+	{
+		Table::render();
+
+		if (getActive() && active != nullptr)
+		{
+			active->render();
+		}
+	}
+
 	void ButtonsTable::update()
 	{
 		Table::update();
 
 		int count = getCellsCount().x*getCellsCount().y;
+
+		if (active != nullptr)
+			active->update();
+
 		for (int i = 0; i < count; i++)
-			buttons[i].update();
+			if (&buttons[i] != active)
+				buttons[i].update();
+
+		active = nullptr;
+		for (int i = 0; i < count; i++)
+			if (buttons[i].isMouseUnder() && buttons[i].getEnabled())
+				active = &buttons[i];
 	}
 
 
@@ -128,7 +157,8 @@ namespace UI
 		Table::draw();
 
 		for (int i = 0; i < getCellsCount().x * getCellsCount().y; i++)
-			buttons[i].render();
+			if (&buttons[i] != active)
+				buttons[i].render();
 	}
 
 	void ButtonsTable::updateModel()
@@ -143,6 +173,8 @@ namespace UI
 		Vector2u cells = getCellsCount();
 		delete[] buttons;
 		buttons = new LabelButton[cells.y*cells.x];
+		active = nullptr;
+
 
 
 		Vector2f dl = Vector2f((getSize().x + getOutlineThickness()) / cells.x,
@@ -173,12 +205,32 @@ namespace UI
 		updateText();
 	}
 
+	LabelButton * ButtonsTable::getActiveButton()
+	{
+		return active;
+	}
+
+	void ButtonsTable::setActiveButton(LabelButton * button)
+	{
+		active = button;
+	}
+
+	LabelButton * ButtonsTable::getButtonByIndex(int index)
+	{
+		return &buttons[index];
+	}
+
+	void ButtonsTable::setTextCount(int count)
+	{
+		textCount = count;
+	}
+
 	void ButtonsTable::updateText()
 	{
 		for (int i = 0; i < getCellsCount().x*getCellsCount().y; i++)
 		{
-			if (i < text.length())
-				buttons[i].setText(wstring(&text[i], 1));
+			if (i < textCount)
+				buttons[i].setText(text[i]);
 			else
 				buttons[i].setText(L"");
 		}

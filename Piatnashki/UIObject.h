@@ -24,7 +24,7 @@ namespace UI
 
 		virtual void update() {};
 
-		void render();
+		virtual void render();
 
 		RenderWindow* getWindow();
 		virtual void setWindow(RenderWindow &window);

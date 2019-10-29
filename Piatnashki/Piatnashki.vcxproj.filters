@@ -66,10 +66,13 @@
     <ClCompile Include="ButtonsTable.cpp">
       <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
-    <ClCompile Include="CharsTable.cpp">
+    <ClCompile Include="Table.cpp">
       <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
+    <ClCompile Include="StringTable.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="PiatnashkiTable.cpp">
       <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,9 +104,6 @@
     <ClInclude Include="ButtonsTable.h">
       <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
-    <ClInclude Include="CharsTable.h">
-      <Filter>Файлы заголовков\Tables</Filter>
-    </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
@@ -112,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="ShadowEffect.h">
       <Filter>Файлы заголовков\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="StringTable.h">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="PiatnashkiTable.h">
+      <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -139,7 +139,8 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelButton.cpp" />
-    <ClCompile Include="CharsTable.cpp" />
+    <ClCompile Include="PiatnashkiTable.cpp" />
+    <ClCompile Include="StringTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Rect.cpp" />
@@ -154,7 +155,8 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="LabelButton.h" />
-    <ClInclude Include="CharsTable.h" />
+    <ClInclude Include="PiatnashkiTable.h" />
+    <ClInclude Include="StringTable.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="ShadowEffect.h" />

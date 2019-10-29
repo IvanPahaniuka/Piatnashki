@@ -57,15 +57,10 @@ namespace UI
 		{
 			fill(isPressed, isPressed + Mouse::Button::ButtonCount, false);
 			setPressedCount(0);
+			isUnder = false;
 
 			if (onNormal != nullptr)
 				onNormal(*this);
-		}
-		else
-		{
-			if (isMouseUnder())
-				if (onOver != nullptr)
-					onOver(*this);
 		}
 	}
 
