@@ -8,6 +8,8 @@ namespace UI
 	public:
 		PiatnashkiTable();
 
+		bool isSolved();
+
 		virtual void setEmptyButton(Vector2u pos);
 		LabelButton *getEmptyButton();
 		

@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  PiatnashkiTable.cpp
+d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(192): warning C4018: <: несоответствие типов со знаком и без знака
+d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(193): warning C4018: <: несоответствие типов со знаком и без знака
   Piatnashki.vcxproj -> D:\Programs\GitRep\Piatnashki\Debug\Piatnashki.exe

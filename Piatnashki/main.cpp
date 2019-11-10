@@ -35,6 +35,10 @@ void initialize(RenderWindow &window)
 
 	Object *mainMenu = new Object();
 	Object *gameMenu = new Object();
+	Object *solvedMenu = new Object();
+
+	Label *solvedSteps = new Label();
+
 
 #pragma region GameMenu
 #pragma region Steps
@@ -135,7 +139,7 @@ void initialize(RenderWindow &window)
 
 			});
 
-			gameTable->setClick([gameTable, stepsInt, steps](UIObject &sender, Mouse::Button button) {
+			gameTable->setClick([gameMenu, solvedMenu, solvedSteps, gameTable, stepsInt, steps](UIObject &sender, Mouse::Button button) {
 				Vector2i clicked = gameTable->getCellByObject(&sender);
 				Vector2i empty = gameTable->getCellByObject(gameTable->getEmptyButton());
 
@@ -146,6 +150,13 @@ void initialize(RenderWindow &window)
 				Vector2u pos1 = Vector2u(clicked.x, clicked.y);
 				Vector2u pos2 = Vector2u(empty.x, empty.y);
 				gameTable->swapButtons(pos1, pos2);
+
+				if (gameTable->isSolved()) {
+					solvedSteps->setText(steps->getText());
+
+					gameMenu->setActive(false);
+					solvedMenu->setActive(true);
+				}
 			});
 		}
 	}
@@ -197,6 +208,157 @@ void initialize(RenderWindow &window)
 
 #pragma endregion
 
+#pragma endregion
+
+#pragma region SolvedMenu
+#pragma region WinText
+	{
+		Label *label = new Label();
+		label->setWindow(window);
+		label->setFont(*font);
+		label->setParent(solvedMenu);
+		label->setText(L"ÏÎÁÅÄÀ");
+		label->setFillColor(FOREGROUND_COLOR);
+		label->setPivot(Vector2f(0.5, 0.5));
+		label->setGlobalPosition(Vector2f(250, 250));
+		label->setFontSize(56U);
+		objects.push_front(label);
+
+		{
+			ShadowEffect* shadow = new ShadowEffect(*label);
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 6));
+		}
+	}
+#pragma endregion
+
+#pragma region MainMenu
+	{
+		LabelButton *button = new LabelButton();
+		button->setWindow(window);
+		button->setFont(*font);
+		button->setParent(solvedMenu);
+		button->setText(L"ãëàâíîå ìåíþ");
+		button->setFontSize(24U);
+		button->setFillColor(FOREGROUND_COLOR);
+		button->setPivot(Vector2f(0.5, 0.5));
+		button->setGlobalPosition(Vector2f(250, 340));
+		button->setSize(Vector2f(300, 40));
+		objects.push_front(button);
+
+		ShadowEffect* shadow = new ShadowEffect(*button);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 3));
+
+		Vector2f* pos = new Vector2f(button->getGlobalPosition());
+		button->setOverState([shadow, pos](UIObject &sender) {
+			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setNormalState([shadow, pos](UIObject &sender) {
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setPressedState([shadow, pos](UIObject &sender) {
+			shadow->setOffset(Vector2f(0, 1));
+			*pos = shadow->getTarget()->getGlobalPosition();
+			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
+		});
+		button->setClick([solvedMenu, mainMenu](UIObject &sender, Mouse::Button button) {
+			solvedMenu->setActive(false);
+			mainMenu->setActive(true);
+		});
+	}
+#pragma endregion
+
+#pragma region NewGame
+	{
+		LabelButton *button = new LabelButton();
+		button->setWindow(window);
+		button->setFont(*font);
+		button->setParent(solvedMenu);
+		button->setText(L"íîâàÿ èãðà");
+		button->setFontSize(24U);
+		button->setFillColor(FOREGROUND_COLOR);
+		button->setPivot(Vector2f(0.5, 0.5));
+		button->setGlobalPosition(Vector2f(250, 384));
+		button->setSize(Vector2f(250, 40));
+		objects.push_front(button);
+
+		ShadowEffect* shadow = new ShadowEffect(*button);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 3));
+
+		Vector2f* pos = new Vector2f(button->getGlobalPosition());
+		button->setOverState([shadow, pos](UIObject &sender) {
+			shadow->setColor(FOCUSED_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setNormalState([shadow, pos](UIObject &sender) {
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+			shadow->getTarget()->setGlobalPosition(*pos);
+		});
+		button->setPressedState([shadow, pos](UIObject &sender) {
+			shadow->setOffset(Vector2f(0, 1));
+			*pos = shadow->getTarget()->getGlobalPosition();
+			shadow->getTarget()->setGlobalPosition(*pos + Vector2f(0, 2));
+		});
+		button->setClick([gameMenu, solvedMenu, gameTable, gameMode, stepsInt, steps](UIObject &sender, Mouse::Button button) {
+			gameTable->setCellsCount(Vector2u((unsigned int)*gameMode, (unsigned int)*gameMode));
+			gameTable->randomize();
+
+
+			*stepsInt = 0;
+			steps->setText(to_wstring(*stepsInt));
+
+			solvedMenu->setActive(false);
+			gameMenu->setActive(true);
+		});
+	}
+#pragma endregion
+
+#pragma region Steps
+	{
+		Label *label = new Label();
+		label->setWindow(window);
+		label->setFont(*font);
+		label->setParent(solvedMenu);
+		label->setText(L"ÕÎÄÛ");
+		label->setFillColor(FOREGROUND_COLOR);
+		label->setPivot(Vector2f(0.5, 1));
+		label->setGlobalPosition(Vector2f(250, 590));
+		label->setFontSize(32U);
+		objects.push_front(label);
+
+		{
+			ShadowEffect* shadow = new ShadowEffect(*label);
+			shadow->setColor(SHADOW_COLOR);
+			shadow->setOffset(Vector2f(0, 3));
+		}
+	}
+
+
+	solvedSteps->setWindow(window);
+	solvedSteps->setFont(*font);
+	solvedSteps->setParent(solvedMenu);
+	solvedSteps->setText(L"0");
+	solvedSteps->setFillColor(FOREGROUND_COLOR);
+	solvedSteps->setPivot(Vector2f(0.5, 0));
+	solvedSteps->setGlobalPosition(Vector2f(250, 600));
+	solvedSteps->setFontSize(48U);
+	objects.push_front(solvedSteps);
+
+	{
+		ShadowEffect* shadow = new ShadowEffect(*solvedSteps);
+		shadow->setColor(SHADOW_COLOR);
+		shadow->setOffset(Vector2f(0, 4));
+	}
+
+#pragma endregion
 
 #pragma endregion
 
@@ -404,6 +566,7 @@ void initialize(RenderWindow &window)
 #pragma endregion
 
 	gameMenu->setActive(false);
+	solvedMenu->setActive(false);
 }
 
 

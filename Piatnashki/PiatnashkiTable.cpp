@@ -7,6 +7,18 @@ namespace UI
 	{
 	}
 
+	bool PiatnashkiTable::isSolved()
+	{
+		wstring *text = getText();
+		int size = getCellsCount().x*getCellsCount().y;
+
+		for (int i = 0; i < size; i++)
+			if (text[i] != basicText[i])
+				return false;
+
+		return true;
+	}
+
 
 	PiatnashkiTable::~PiatnashkiTable()
 	{
@@ -79,9 +91,9 @@ namespace UI
 
 		wstring *texts = getText();
 
-		wstring *tmp = &texts[index2];
+		wstring tmp = texts[index2];
 		texts[index2] = texts[index1];
-		texts[index1] = *texts;
+		texts[index1] = tmp;
 
 		if (getButtonByIndex(index1) == emptyButton)
 			setEmptyButton(pos2);
@@ -112,16 +124,8 @@ namespace UI
 
 		if (!isCorrect()) 
 		{
-			if (getCellsCount().x == getCellsCount().y) 
-			{
-				rotate();
-				text = getText();
-			}
-			else
-			{
-				randomize();
-				return;
-			}
+			randomize();
+			return;
 		}
 
 		int maxIndex = 0;
@@ -139,8 +143,10 @@ namespace UI
 	bool PiatnashkiTable::isCorrect()
 	{
 		wstring *text = getText();
-
 		int size = getCellsCount().x*getCellsCount().y;
+
+		int parity = 0;
+
 		int maxIndex = 0;
 		for (int i = 1; i < size; i++)
 			if (text[i] == basicText[size - 1])
@@ -149,18 +155,19 @@ namespace UI
 				break;
 			}
 
-		int n = maxIndex / getCellsCount().x + 1;
-		for (int i = 0; i < size - 1; i++)
-		if (maxIndex != i)
-		{
-			int ind = getIndexInBasic(text[i]);
-			for (int j = i + 1; j < size; j++)
-				if (getIndexInBasic(text[j]) < ind)
-					n++;
-		}
+		for (int i = 0; i < size; i++)
+			if(i != maxIndex)
+			{
+				int val = getIndexInBasic(text[i]);
+				for (int j = i + 1; j < size; j++)
+					if (val > getIndexInBasic(text[j]))
+						parity++;
+			}
 
+		if (getCellsCount().x % 2 == 0 && (maxIndex / getCellsCount().x) % 2 == 0)
+			parity++;
 
-		return n % 2 == 0;
+		return parity % 2 == 0;
 	}
 
 	int PiatnashkiTable::getIndexInBasic(wstring text)
