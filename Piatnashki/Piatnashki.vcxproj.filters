@@ -31,6 +31,12 @@
     <Filter Include="Исходные файлы\Effects">
       <UniqueIdentifier>{25c8523b-9d08-4b36-a529-9121a9c45b58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Styles">
+      <UniqueIdentifier>{16fb01c6-41b8-4b98-bfe9-295287303c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Styles">
+      <UniqueIdentifier>{49caf945-243b-4b9b-b357-11d5276f7bf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +81,15 @@
     <ClCompile Include="PiatnashkiTable.cpp">
       <Filter>Исходные файлы\Tables</Filter>
     </ClCompile>
+    <ClCompile Include="ShadowLabel.cpp">
+      <Filter>Исходные файлы\Styles</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowLabelButton.cpp">
+      <Filter>Исходные файлы\Styles</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowBorderLabelButton.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UIObject.h">
@@ -118,6 +133,18 @@
     </ClInclude>
     <ClInclude Include="PiatnashkiTable.h">
       <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="Styles.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowLabel.h">
+      <Filter>Файлы заголовков\Styles</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowLabelButton.h">
+      <Filter>Файлы заголовков\Styles</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowBorderLabelButton.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

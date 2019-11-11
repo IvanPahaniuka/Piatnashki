@@ -140,6 +140,9 @@
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelButton.cpp" />
     <ClCompile Include="PiatnashkiTable.cpp" />
+    <ClCompile Include="ShadowBorderLabelButton.cpp" />
+    <ClCompile Include="ShadowLabel.cpp" />
+    <ClCompile Include="ShadowLabelButton.cpp" />
     <ClCompile Include="StringTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -156,10 +159,14 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="LabelButton.h" />
     <ClInclude Include="PiatnashkiTable.h" />
+    <ClInclude Include="ShadowBorderLabelButton.h" />
+    <ClInclude Include="ShadowLabel.h" />
+    <ClInclude Include="ShadowLabelButton.h" />
     <ClInclude Include="StringTable.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="ShadowEffect.h" />
+    <ClInclude Include="Styles.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIObject.h" />

@@ -1,54 +1,29 @@
-﻿  BorderLabelButton.cpp
-  Button.cpp
-  ButtonsTable.cpp
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(14): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(43): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(56): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(69): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(80): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(81): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(93): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(101): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(109): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(117): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(159): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(185): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(186): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\buttonstable.cpp(230): warning C4018: <: несоответствие типов со знаком и без знака
-  Effect.cpp
-  Label.cpp
-  LabelButton.cpp
-  PiatnashkiTable.cpp
-d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(192): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(193): warning C4018: <: несоответствие типов со знаком и без знака
-  StringTable.cpp
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(15): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(40): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(53): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(66): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(85): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(107): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(108): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\stringtable.cpp(126): warning C4018: <: несоответствие типов со знаком и без знака
+﻿  ShadowBorderLabelButton.cpp
+d:\programs\gitrep\piatnashki\piatnashki\shadowborderlabelbutton.cpp(18): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\programs\gitrep\piatnashki\piatnashki\shadowborderlabelbutton.cpp(19): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  ShadowLabelButton.cpp
+d:\programs\gitrep\piatnashki\piatnashki\shadowlabelbutton.cpp(18): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\programs\gitrep\piatnashki\piatnashki\shadowlabelbutton.cpp(19): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
   main.cpp
-  Object.cpp
-  Rect.cpp
-  ShadowEffect.cpp
-  Table.cpp
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(15): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(18): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(45): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(48): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(56): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(59): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(69): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(74): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(92): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\table.cpp(113): warning C4018: <: несоответствие типов со знаком и без знака
-  UIObject.cpp
   Создание кода
-  1264 of 1267 functions (99.8%) were compiled, the rest were copied from previous compilation.
-    1163 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  194 of 1005 functions (19.3%) were compiled, the rest were copied from previous compilation.
+    130 functions were new in current compilation
+    138 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   Piatnashki.vcxproj -> D:\Programs\GitRep\Piatnashki\Release\Piatnashki.exe
