@@ -27,8 +27,18 @@ const float GAMEFIELD_THICKNESS = 7;
 
 forward_list<UIObject*> objects;
 
+void initializeWindow(RenderWindow &window) 
+{
+	Image icon;
+
+	if (icon.loadFromFile("Icon.png"))
+		window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+}
+
 void initialize(RenderWindow &window)
 {
+	initializeWindow(window);
+
 	GAME_MODES* gameMode = new GAME_MODES(GAME_MODES::NORMAL);
 
 	Font* font = new Font();

@@ -1,4 +1,31 @@
-﻿  PiatnashkiTable.cpp
-d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(192): warning C4018: <: несоответствие типов со знаком и без знака
-d:\programs\gitrep\piatnashki\piatnashki\piatnashkitable.cpp(193): warning C4018: <: несоответствие типов со знаком и без знака
+﻿  ShadowBorderLabelButton.cpp
+d:\programs\gitrep\piatnashki\piatnashki\shadowborderlabelbutton.cpp(18): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\programs\gitrep\piatnashki\piatnashki\shadowborderlabelbutton.cpp(19): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  ShadowLabel.cpp
+d:\programs\gitrep\piatnashki\piatnashki\shadowlabel.cpp(11): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  ShadowLabelButton.cpp
+d:\programs\gitrep\piatnashki\piatnashki\shadowlabelbutton.cpp(18): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\programs\gitrep\piatnashki\piatnashki\shadowlabelbutton.cpp(19): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  main.cpp
+  Создание кода...
   Piatnashki.vcxproj -> D:\Programs\GitRep\Piatnashki\Debug\Piatnashki.exe
